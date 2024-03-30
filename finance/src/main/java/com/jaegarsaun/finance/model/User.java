@@ -1,8 +1,8 @@
 package com.jaegarsaun.finance.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -16,9 +16,8 @@ public class User {
     private String username;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude // Exclude this field from the toString() method
     private Account account;
-
-    // Getters and setters
 }
 
 

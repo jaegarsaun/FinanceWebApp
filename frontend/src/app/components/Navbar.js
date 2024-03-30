@@ -11,7 +11,7 @@ const ICONS = {
   FaShoppingCart: FaShoppingCart,
 };
 
-export default function Navbar() {
+export default function Navbar({name}) {
   const router = useRouter();
   const NavButton = [
     { text: "Dashboard", icon: "AiFillHome" },
@@ -26,7 +26,7 @@ export default function Navbar() {
   
   return (
     <nav className="bg-dark flex flex-col items-center h-[100vh] p-5 gap-3 w-[20vw]">
-      <h1 className="text-white font-bold text-3xl">Hello, Name</h1>
+      <h1 className="text-white font-bold text-3xl">Hello, {name}</h1>
       <div className="wrapper flex flex-col p-2 justify-between h-full w-full">
         <ul className="flex flex-col gap-4 w-full h-full">
           {NavButton.map((item, index) => (
