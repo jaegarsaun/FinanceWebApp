@@ -1,7 +1,9 @@
+'use client'
 import { FaSackDollar } from "react-icons/fa6";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { FaHandHoldingDollar } from "react-icons/fa6";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import React from "react"
 const ICONS = {

@@ -1,5 +1,6 @@
 package com.jaegarsaun.finance.Controller;
 
+import com.jaegarsaun.finance.DTO.LoginResponse;
 import com.jaegarsaun.finance.Service.UserService;
 import com.jaegarsaun.finance.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticate(user.getUsername(), user.getPassword());
         if (isAuthenticated) {
-            return ResponseEntity.ok().body("User authenticated successfully");
+            User loggedInUser = userService.findByUsername(user.getUsername());
+            LoginResponse response = new LoginResponse("User authenticated successfully", loggedInUser.getUserId());
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.badRequest().body("Invalid username or password");
     }
