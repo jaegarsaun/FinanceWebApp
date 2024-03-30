@@ -1,10 +1,7 @@
 package com.jaegarsaun.finance.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -17,5 +14,11 @@ public class User {
     private String lName;
     private String password;
     private String username;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Account account;
+
+    // Getters and setters
 }
+
 
