@@ -1,5 +1,6 @@
 package com.jaegarsaun.finance.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -17,6 +18,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude // Exclude this field from the toString() method
+    @JsonBackReference
     private Account account;
 }
 

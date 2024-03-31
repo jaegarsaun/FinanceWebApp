@@ -57,11 +57,15 @@ export default function Home() {
 
         const fetchUserTransactions = async() => {
             const userId = Cookies.get('userId');
-            try{
-                const response = await axios.get(`http://localhost:8080/api/transactions/user/${userId}`)
-                setTransactions(response.data);
-            }catch(error){
+            try {
+                const response = await axios.get(`http://localhost:8080/api/transactions/user/${userId}`);
+                // Ensure the response is always treated as an array
+                const transactionsData = Array.isArray(response.data) ? response.data : [];
+                console.log(response.data)
+                setTransactions(transactionsData);
+            } catch (error) {
                 console.log('Error getting transaction info', error);
+                setTransactions([]); // Ensure to reset to an empty array on error
             }
         }
         fetchUserTransactions()
@@ -80,7 +84,7 @@ export default function Home() {
   return (
     <main className="flex">
       <Navbar name={userInfo.username}/>
-      <section className="dashboard p-10 flex flex-row w-full justify-between">
+      <section className="dashboard p-10 flex flex-row w-full justify-between gap-2">
         <section className="main flex flex-col w-[55vw]">
           <div className="yourMoney flex flex-col gap-2 md:flex-row md:justify-between md:items-center">
             {moneyCards.map((item, index) => (
@@ -92,11 +96,11 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section className="side flex  flex-col grow items-center gap-2">
+        <section className="side flex  flex-col grow items-center gap-2 bg-white rounded-xl p-2">
           <h1 className="font-bold text-2xl text-center">Recent Transactions</h1>
                 {transactions.map((item, index) => (
-                    <div>
-
+                    <div className="bg-lightBlue w-full rounded-xl p-2">
+                        {item.cost}
                     </div>
                 ))}
         </section>

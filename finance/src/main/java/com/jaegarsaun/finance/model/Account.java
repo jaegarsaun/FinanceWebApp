@@ -1,5 +1,6 @@
 package com.jaegarsaun.finance.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -13,7 +14,7 @@ public class Account {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    @ToString.Exclude // Exclude this field from the toString() method
+    @JsonBackReference
     private User user;
 
     private Float balance;

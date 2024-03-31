@@ -1,6 +1,7 @@
 package com.jaegarsaun.finance.Controller;
 
 import com.jaegarsaun.finance.DTO.TransactionDTO;
+import com.jaegarsaun.finance.Service.TransactionService;
 import com.jaegarsaun.finance.model.Transaction;
 import com.jaegarsaun.finance.model.User;
 import com.jaegarsaun.finance.repository.TransactionRepository;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -22,11 +24,15 @@ public class TransactionsController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Transaction>> getTransactionsByUserId(@PathVariable Integer userId) {
-        List<Transaction> transactions = transactionRepository.findByUserUserId(userId, Sort.by(Sort.Direction.ASC, "postedAt"));
+    public ResponseEntity<List<TransactionDTO>> getTransactionsByUserId(@PathVariable Integer userId) {
+        List<TransactionDTO> transactions = transactionService.findTransactionsByUserId(userId);
         return ResponseEntity.ok(transactions);
     }
+
     @PostMapping("/create")
     public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionDTO transactionDTO) {
         User user = userRepository.findById(transactionDTO.getUserID()).orElseThrow(() -> new RuntimeException("User not found"));
