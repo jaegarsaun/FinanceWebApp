@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import React from "react";
 import Cookies from "js-cookie";
+import { LineChart } from "recharts";
+import RenderFinanceChart from "../components/RenderFinanceChart";
 const ICONS = {
   AiFillDollarCircle: AiFillDollarCircle,
   FaSackDollar: FaSackDollar,
@@ -137,18 +139,24 @@ export default function Home() {
     <main className="flex">
       <Navbar name={userInfo.username} />
       <section className="dashboard p-10 flex flex-row w-full justify-between gap-4">
-        <section className="main flex flex-col w-[55vw]">
+        <section className="main flex flex-col w-[55vw] gap-5">
           <div className="yourMoney flex flex-col gap-2 md:flex-row md:justify-between md:items-center">
             {moneyCards.map((item, index) => (
               <div
                 key={index}
-                className="moneyCard flex flex-col bg-white justify-evenly rounded-lg p-2 gap-2 w-[150px]"
+                className="moneyCard flex flex-col bg-white justify-evenly rounded-lg p-2 gap-2 w-1/4"
               >
                 {React.createElement(ICONS[item.iconName])}
                 <p className="font-bold text-xl">${item.amount}</p>
                 <p className="font-light text-sm">{item.name}</p>
               </div>
             ))}
+          </div>
+          <div className="w-full h-full bg-white rounded-xl p-2 flex flex-col gap-4">
+            <div>
+                <h1 className="font-bold text-xl">Finances</h1>
+            </div>
+          <RenderFinanceChart/>
           </div>
         </section>
         <section className="side flex flex-col grow items-center gap-2 bg-white rounded-xl p-2">
