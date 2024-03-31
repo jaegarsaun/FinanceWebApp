@@ -156,7 +156,7 @@ export default function Home() {
             <div>
                 <h1 className="font-bold text-xl">Finances</h1>
             </div>
-          <RenderFinanceChart/>
+          <RenderFinanceChart data={accountInfo}/>
           </div>
         </section>
         <section className="side flex flex-col grow items-center gap-2 bg-white rounded-xl p-2">
