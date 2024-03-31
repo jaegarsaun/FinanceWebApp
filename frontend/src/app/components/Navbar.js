@@ -30,13 +30,13 @@ export default function Navbar({name}) {
       <div className="wrapper flex flex-col p-2 justify-between h-full w-full">
         <ul className="flex flex-col gap-4 w-full h-full">
           {NavButton.map((item, index) => (
-            <button className="navButton w-full flex flex-row justify-between items-center font-medium text-washed p-2 rounded-xl transition-all hover:bg-white hover:text-dark">
+            <button className="navButton w-full flex flex-row gap-2 items-center font-medium text-washed p-2 rounded-xl transition-all hover:bg-white hover:text-dark">
               {React.createElement(ICONS[item.icon])}
               {item.text}
             </button>
           ))}
         </ul>
-        <button onClick={logout} className="navButton w-full flex flex-row justify-between items-center font-medium text-washed p-2 rounded-xl transition-all hover:bg-white hover:text-dark">
+        <button onClick={logout} className="navButton w-full flex flex-row gap-2 items-center font-medium text-washed p-2 rounded-xl transition-all hover:bg-white hover:text-dark">
           <IoLogOut />
           Logout
         </button>

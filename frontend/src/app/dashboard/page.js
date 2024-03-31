@@ -18,6 +18,7 @@ const ICONS = {
 export default function Home() {
     const [userInfo, setUserInfo] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
+    const [transactions, setTransactions] = useState([]);
     const router = useRouter();
     useEffect(() => {
         const fetchUserInfo = async() => {
@@ -34,6 +35,7 @@ export default function Home() {
                 
             }catch(error){
                 console.log('Failed to fetch user info', error)
+                setTransactions([]); // Reset to empty array if response is not as expected
                 // TODO: Do something else with this like display an error the the user
             }
         }
@@ -52,6 +54,17 @@ export default function Home() {
             }
         }
         fetchAccountInfo()
+
+        const fetchUserTransactions = async() => {
+            const userId = Cookies.get('userId');
+            try{
+                const response = await axios.get(`http://localhost:8080/api/transactions/user/${userId}`)
+                setTransactions(response.data);
+            }catch(error){
+                console.log('Error getting transaction info', error);
+            }
+        }
+        fetchUserTransactions()
         
     }, [router]);
     console.log(userInfo);
@@ -68,7 +81,7 @@ export default function Home() {
     <main className="flex">
       <Navbar name={userInfo.username}/>
       <section className="dashboard p-10 flex flex-row w-full justify-between">
-        <section className="main flex flex-col w-[65vw]">
+        <section className="main flex flex-col w-[55vw]">
           <div className="yourMoney flex flex-col gap-2 md:flex-row md:justify-between md:items-center">
             {moneyCards.map((item, index) => (
               <div key={index} className="moneyCard flex flex-col bg-white justify-evenly rounded-lg p-2 gap-2 w-[150px]">
@@ -79,8 +92,13 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section className="side flex grow">
-          hello
+        <section className="side flex  flex-col grow items-center gap-2">
+          <h1 className="font-bold text-2xl text-center">Recent Transactions</h1>
+                {transactions.map((item, index) => (
+                    <div>
+
+                    </div>
+                ))}
         </section>
       </section>
     </main>
