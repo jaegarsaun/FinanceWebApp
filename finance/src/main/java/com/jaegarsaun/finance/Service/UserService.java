@@ -1,7 +1,6 @@
 package com.jaegarsaun.finance.Service;
 import com.jaegarsaun.finance.model.Account;
 import com.jaegarsaun.finance.model.User;
-import com.jaegarsaun.finance.repository.AccountRepository;
 import com.jaegarsaun.finance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +11,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
+
 
     public boolean authenticate(String username, String password) {
         // Attempt to find a user by the username
@@ -31,19 +30,19 @@ public class UserService {
         // Save the new user
         User newUser = userRepository.save(user);
 
-        // Create a new account for the user
-        Account account = new Account();
-        account.setUser(newUser); // Set the user
-        account.setBalance(0.0F); // Initial values
-        account.setSavings(0.0F);
-        account.setIncome(0.0F);
-        account.setExpenses(0.0F);
+        // Create and associate an account with the new user
+        Account newAccount = new Account();
+        newAccount.setBalance(0f);
+        newAccount.setIncome(0f);
+        newAccount.setSavings(0f);
+        newAccount.setExpenses(0f);
+        newAccount.setUser(newUser); // Associate the account with the user
 
-        accountRepository.save(account);
+        accountService.saveOrUpdateAccount(newAccount); // Save the new account
 
-        newUser.setAccount(account); // Link the account back to the user if needed
+        newUser.setAccount(newAccount); // Set the created account to the new user for bidirectional association
 
-        return newUser;
+        return newUser; // Return the new user with the associated account
     }
 
     public User findByUsername(String username) {

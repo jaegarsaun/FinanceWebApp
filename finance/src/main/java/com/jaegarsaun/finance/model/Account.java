@@ -1,40 +1,34 @@
 package com.jaegarsaun.finance.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
-
+import org.hibernate.envers.Audited;
 @Data
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@Audited
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    @JsonBackReference
-    private User user;
-
+    @Column(nullable = false)
     private Float balance;
-    private Float savings;
+
+    @Column(nullable = false)
     private Float income;
+
+    @Column(nullable = false)
+    private Float savings;
+
+    @Column(nullable = false)
     private Float expenses;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @OneToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
 
-    @LastModifiedDate
-    @Column(nullable = true)
-    private LocalDateTime updatedAt;
+
 }
+
 
 
