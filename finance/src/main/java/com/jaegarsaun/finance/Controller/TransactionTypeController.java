@@ -1,4 +1,4 @@
-package com.jaegarsaun.finance.controller;
+package com.jaegarsaun.finance.Controller;
 
 import com.jaegarsaun.finance.model.TransactionType;
 import com.jaegarsaun.finance.repository.TransactionTypeRepository;

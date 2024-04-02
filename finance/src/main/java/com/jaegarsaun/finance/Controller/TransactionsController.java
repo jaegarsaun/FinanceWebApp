@@ -40,7 +40,7 @@ public class TransactionsController {
         transaction.setUser(user);
         transaction.setTransactionTypeId(transactionDTO.getTransactionTypeId());
         transaction.setCost(transactionDTO.getCost());
-        transaction.setPostedAt(transactionDTO.getPostedAt());
+        transaction.setPostedAt(transactionDTO.getPostedAt()); //TODO: Fix this and make it the users date and time
 
         Transaction savedTransaction = transactionRepository.save(transaction);
         return ResponseEntity.ok(savedTransaction);

@@ -16,7 +16,6 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
 
     public List<TransactionDTO> findTransactionsByUserId(Integer userId) {
-        // Adjust the method call according to the new repository method name
         List<Transaction> transactions = transactionRepository.findByUserUserId(userId);
         return transactions.stream().map(this::convertToTransactionDTO).collect(Collectors.toList());
     }
@@ -25,7 +24,7 @@ public class TransactionService {
         TransactionDTO dto = new TransactionDTO();
         dto.setTransactionTypeId(transaction.getTransactionTypeId());
         dto.setCost(transaction.getCost());
-        dto.setUserID(transaction.getUser().getUserId()); // Ensure this matches your DTO's field name
+        dto.setUserID(transaction.getUser().getUserId());
         dto.setPostedAt(transaction.getPostedAt());
         return dto;
     }

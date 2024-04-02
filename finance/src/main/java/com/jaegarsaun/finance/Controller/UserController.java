@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users") // Base path for user-related endpoints
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
