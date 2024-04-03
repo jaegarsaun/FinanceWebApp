@@ -22,6 +22,7 @@ export default function Home() {
   const [accountInfo, setAccountInfo] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [transactionTypes, setTransactionTypes] = useState({});
+  const [acountHistoryData, setMappedAccountHistoryData] = useState([]);
   const router = useRouter();
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -53,12 +54,38 @@ export default function Home() {
         const response = await axios.get(
           `http://localhost:8080/api/accounts/user/${userId}`
         );
+        console.log(response.data)
         setAccountInfo(response.data);
+        // Create a cookie and put accountId in there
+        Cookies.set("accountId", response.data.accountId.toString(), { expires: 1 });
       } catch (error) {
         console.log("Error getting account info", error);
       }
     };
     fetchAccountInfo();
+
+    const fetchAccountHistory = async () => {
+        const userId = Cookies.get("userId");
+        try{
+            const response = await axios.get(`http://localhost:8080/api/accounts/history/user/${userId}`);
+            const responseData = response.data;
+
+            // Map the response data to the desired format
+            const mappedData = responseData.map(data => ({
+                name: timestampConvert(data.REVTSTMP),
+                balance: data.balance,
+                savings: data.savings,
+                income: data.income,
+                expenses: data.expenses
+            }));
+
+            // Set the mapped data to the component state
+            setMappedAccountHistoryData(mappedData);
+        }catch(error) {
+            console.log("Error Getting Account Info");
+        }
+    }
+    fetchAccountHistory();
 
     const fetchUserTransactions = async () => {
       const userId = Cookies.get("userId");
@@ -116,6 +143,14 @@ export default function Home() {
   console.log(userInfo);
   console.log(accountInfo);
 
+  function timestampConvert(timestamp){
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const date = new Date(timestamp);
+    const month = months[date.getMonth()];
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits for day
+    return month + ' ' + day;
+  }
+
   const moneyCards = [
     {
       name: "Balance",
@@ -156,7 +191,7 @@ export default function Home() {
             <div>
                 <h1 className="font-bold text-xl">Finances</h1>
             </div>
-          <RenderFinanceChart data={accountInfo}/>
+          <RenderFinanceChart data={acountHistoryData}/>
           </div>
         </section>
         <section className="side flex flex-col grow items-center gap-2 bg-white rounded-xl p-2">
