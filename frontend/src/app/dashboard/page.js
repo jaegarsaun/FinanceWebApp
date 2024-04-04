@@ -196,7 +196,7 @@ export default function Home() {
         </section>
         <section className="side flex flex-col grow items-center gap-2 bg-white rounded-xl p-2">
           <h1 className="font-bold text-2xl text-center">
-            Recent Transactions
+            Transaction History
           </h1>
           {transactions.map((item, index) => (
             <div
