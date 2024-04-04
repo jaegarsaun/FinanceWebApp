@@ -15,8 +15,9 @@ public class ExpenseService {
 
     @Autowired
     private ExpenseRepository expenseRepository;
-
-    public Expenses createExpense(Account account, int userId, String expenseType, String accountFrom, Float accountTo, Date executionDate, float amount) {
+    @Autowired
+    private AccountService accountService;
+    public Expenses createExpense(Account account, int userId, String expenseType, String accountFrom, String accountTo, Date executionDate, float amount) {
         Expenses expense = new Expenses();
         expense.setAccount(account); // Set the account object instead of just the accountId
         expense.setUserId(userId);
@@ -26,7 +27,12 @@ public class ExpenseService {
         expense.setExecutionDate(executionDate);
         expense.setAmount(amount);
 
-        return expenseRepository.save(expense);
+        Expenses savedExpense = expenseRepository.save(expense);
+
+        // Update the account's expenses
+        accountService.updateAccountExpenses(account);
+
+        return savedExpense;
     }
 
     public List<Expenses> getExpensesForToday() {

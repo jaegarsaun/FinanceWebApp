@@ -2,6 +2,7 @@
 
 import { AiFillHome } from "react-icons/ai";
 import { FaShoppingCart, FaMoneyBill } from "react-icons/fa";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 import { IoLogOut } from "react-icons/io5";
 import Cookies from "js-cookie";
 import React from "react";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import ExpenseForm from "./ExpenseForm";
+import TransactionForm from "./TransactionForm";
 const ICONS = {
   AiFillHome: AiFillHome,
   FaShoppingCart: FaShoppingCart,
@@ -62,8 +64,9 @@ export default function Navbar({ name }) {
         <div className="p-8 border w-96 shadow-lg rounded-md bg-white">
           <div className="text-center">
             <h3 className="text-2xl font-bold text-gray-900">Add Transaction</h3>
-            <div className="mt-2 px-7 py-3">
-              <p className="text-lg text-gray-500">Modal Body</p>
+            <div className="mt-2 px-7 py-3 flex flex-col">
+              <p className="text-md text-washed font-light">All transactions come out of your balance</p>
+              <TransactionForm/>
             </div>
             <div className="flex justify-center mt-4">
               {/* Close the modal */}
@@ -98,6 +101,10 @@ export default function Navbar({ name }) {
             Add Transaction
           </div>
           {showTransaction && <TransactionModal />}
+          <div onClick="" className={linkStyle}>
+            <FaHandHoldingDollar/>
+            Manage Income
+          </div>
         </ul>
         <button
           onClick={logout}

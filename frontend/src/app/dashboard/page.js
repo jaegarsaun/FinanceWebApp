@@ -102,7 +102,7 @@ export default function Home() {
           : [];
         console.log(response.data);
         setTransactions(transactionsData);
-
+        
         // Convert array to object for easy lookup
         const typesLookup = transactionTypesResponse.data.reduce(
           (acc, current) => {

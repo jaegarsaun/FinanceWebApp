@@ -11,5 +11,8 @@ import java.util.List;
 public interface ExpenseRepository extends JpaRepository<Expenses, Integer> {
     @Query("SELECT e FROM Expenses e WHERE e.executionDate = :date")
     List<Expenses> findByExecutionDate(@Param("date") LocalDate date);
+
+    @Query("SELECT e FROM Expenses e WHERE e.userId = :userId")
+    List<Expenses> findByUserId(@Param("userId") int userId);
 }
 

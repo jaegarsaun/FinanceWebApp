@@ -7,8 +7,15 @@ public class TransactionDTO {
     private Float cost;
     private Integer userID;
     private LocalDateTime postedAt;
+    private String accountFrom; // "balance" or "savings"
+    private String accountTo; // Used for transfers, can be "balance" or "savings"
 
     // Getters and Setters
+    public String getAccountFrom() {return accountFrom;}
+    public void setAccountFrom(String accountFrom){this.accountFrom = accountFrom; };
+
+    public String getAccountTo() {return accountTo; }
+    public void setAccountTo(String accountTo) {this.accountTo = accountTo; };
     public Integer getTransactionTypeId() {
         return transactionTypeId;
     }

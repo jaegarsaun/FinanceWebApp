@@ -1,7 +1,9 @@
 package com.jaegarsaun.finance.Service;
 
 import com.jaegarsaun.finance.model.Account;
+import com.jaegarsaun.finance.model.Expenses;
 import com.jaegarsaun.finance.repository.AccountRepository;
+import com.jaegarsaun.finance.repository.ExpenseRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.envers.AuditReader;
@@ -20,6 +22,8 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private ExpenseRepository expenseRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -33,6 +37,19 @@ public class AccountService {
     }
     public Optional<Account> findByUserId(Integer userId) {
         return Optional.ofNullable(accountRepository.findByUserUserId(userId));
+    }
+
+    public void updateAccountExpenses(Account account) {
+        int userId = account.getUser().getUserId();
+        List<Expenses> userExpenses = expenseRepository.findByUserId(userId);
+
+        float totalExpenses = 0;
+        for (Expenses expense : userExpenses) {
+            totalExpenses += expense.getAmount();
+        }
+
+        account.setExpenses(totalExpenses);
+        accountRepository.save(account);
     }
 
 

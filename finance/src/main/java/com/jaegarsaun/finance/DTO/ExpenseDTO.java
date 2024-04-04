@@ -7,14 +7,14 @@ public class ExpenseDTO {
     private int userId;
     private String expenseType;
     private String accountFrom;
-    private Float accountTo;
+    private String accountTo;
     private Date executionDate;
     private float amount;
 
     // Constructors
     public ExpenseDTO() {}
 
-    public ExpenseDTO(int accountId, int userId, String expenseType, String accountFrom, Float accountTo, Date executionDate, float amount) {
+    public ExpenseDTO(int accountId, int userId, String expenseType, String accountFrom, String accountTo, Date executionDate, float amount) {
         this.accountId = accountId;
         this.userId = userId;
         this.expenseType = expenseType;
@@ -57,11 +57,11 @@ public class ExpenseDTO {
         this.accountFrom = accountFrom;
     }
 
-    public Float getAccountTo() {
+    public String getAccountTo() {
         return accountTo;
     }
 
-    public void setAccountTo(Float accountTo) {
+    public void setAccountTo(String accountTo) {
         this.accountTo = accountTo;
     }
 
